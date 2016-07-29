@@ -1,19 +1,17 @@
 <?php
-require_once '../config.php';
 function showYouTubeVideoComments() {
-	$VIDEO_ID = "";    
+require '../config.php';
+	$VIDEO_ID = "GZ2gaWsXzQw";    
 if (isset($_GET["id"])){
 	$VIDEO_ID = $_GET["id"];
-} else{
- $VIDEO_ID = "GZ2gaWsXzQw";
 }
 
-    $API_KEY = $YOUTUBE_API_KEY
+    $API_KEY = $YOUTUBE_API_KEY;
     $videoUrl = file_get_contents("https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId={$VIDEO_ID}&key={$API_KEY}"); //Get contents of Video URL with specified video ID.
     $jsonStuff = json_decode($videoUrl, true); //Decode API Response.
 
-    if (empty($jsonStuff)) { echo "No comments were found."; } //If there are no comments, tell the user.
-    echo "<p>";
+    if (empty($jsonStuff)) { echo "No comments were found."; } //If there are no comments, tell the user. 
+echo "<p>";
 /* Display each comment 'item' in array */
     foreach($jsonStuff['items'] as $val) {
 
