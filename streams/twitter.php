@@ -13,7 +13,9 @@ if (isset($_GET['hashtag'])){
 	$hashtag = $_GET['hashtag'];
 }
 if (isset($_GET['format'])){
-	$format = $_GET['format'];
+	if($_GET['format'] == 'false'){
+		$format = false;	
+	}
 }
 $url = 'https://api.twitter.com/1.1/search/tweets.json';
 $requestMethod = 'GET';
@@ -29,9 +31,12 @@ $data = json_decode($data);
 
 $maxc = 10;
 for ($i = 0; $i<count( $data->statuses );$i++){
-	echo "<div><br> >>>>>>>>>>".$data->statuses[$i]->created_at."</div>";
-	echo "<div>".$data->statuses[$i]->user->name." @".$data->statuses[$i]->user->screen_name."</div>";
-	echo "<div>\"".$data->statuses[$i]->text."\"<br></div>";
+	if ($format)
+		echo "<div class='date'><br> MSG_".$i.">>>>>>>>>>".$data->statuses[$i]->created_at."</div>";
+	else
+		echo "<div class='date'><br>".$data->statuses[$i]->created_at."</div>";
+	echo "<div class='username'>".$data->statuses[$i]->user->name." @".$data->statuses[$i]->user->screen_name."</div>";
+	echo "<div class='statustext'>\"".$data->statuses[$i]->text."\"<br></div>";
 }
 ?>
 
